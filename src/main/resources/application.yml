@@ -7,7 +7,7 @@ security:
 
 spring:
     application:
-        name: sb-ecom
+        name: spring-scaffold
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: ${DB_URL}
@@ -41,20 +41,20 @@ spring:
 
 rabbitmq:
     email:
-        exchange: sbecom.email.exchange
+        exchange: springscaffold.email.exchange
         queues:
             welcome:
-                name: sbecom.email.welcome
+                name: springscaffold.email.welcome
                 routing-key: email.welcome
             password-reset:
-                name: sbecom.email.password-reset
+                name: springscaffold.email.password-reset
                 routing-key: email.password-reset
             notification:
-                name: sbecom.email.notification
+                name: springscaffold.email.notification
                 routing-key: email.notification
         dead-letter:
-            exchange: sbecom.email.dlx
-            queue: sbecom.email.dead-letter
+            exchange: springscaffold.email.dlx
+            queue: springscaffold.email.dead-letter
             routing-key: email.dead-letter
 
 mail:
