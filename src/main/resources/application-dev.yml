@@ -1,0 +1,64 @@
+security:
+    jwt:
+        secret: bG9jYWwtZGV2LXNlY3JldC1mb3ItZGV2ZWxvcG1lbnQtb25seS1jaGFuZ2UtaW4tcHJvZHVjdGlvbgo=
+
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/ecom
+        username: root
+        password: demoacc
+    flyway:
+        clean-disabled: false    # allow schema wipes in dev only
+    jpa:
+        show-sql: true
+
+    mail:
+        host: localhost
+        port: 1025     # Mailpit SMTP — http://localhost:8025
+        username: ""
+        password: ""
+        properties:
+            mail:
+                smtp:
+                    auth: false
+                    starttls:
+                        enable: false
+
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: sbecom
+        password: "sbecom@001!"
+
+mail:
+    from:
+        address: noreply@localhost
+        name: SB Ecom Dev
+
+app:
+    name: SB Ecom
+    support-email: support@localhost
+    base-url: http://localhost:8080
+    cors:
+        allowed-origins:
+            - http://localhost:3000
+            - http://localhost:5173
+        allowed-methods:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+        allowed-headers:
+            - Authorization
+            - Content-Type
+            - Accept
+        exposed-headers:
+            - Authorization
+        allow-credentials: true
+        max-age: 3600
+    rate-limit:
+        capacity: 200
+        refill-tokens: 200
+        refill-period-seconds: 60

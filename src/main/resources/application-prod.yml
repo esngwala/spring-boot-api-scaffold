@@ -1,0 +1,32 @@
+# All values must be supplied via environment variables in production.
+# No defaults are provided here intentionally.
+
+spring:
+    jpa:
+        show-sql: false
+    flyway:
+        clean-disabled: true
+
+app:
+    cors:
+        allowed-origins:
+            - ${CORS_ALLOWED_ORIGINS}
+        allowed-methods:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+        allowed-headers:
+            - Authorization
+            - Content-Type
+            - Accept
+        exposed-headers:
+            - Authorization
+        allow-credentials: true
+        max-age: 3600
+    rate-limit:
+        capacity: 60
+        refill-tokens: 60
+        refill-period-seconds: 60
