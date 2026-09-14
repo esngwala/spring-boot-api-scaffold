@@ -1,10 +1,10 @@
-package com.esngwala.spring.boot.scaffold.controller;
+package com.esngwala.spring.boot.scaffold.api.controller;
 
-import com.esngwala.spring.boot.scaffold.dto.category.CategoryCreateDTO;
-import com.esngwala.spring.boot.scaffold.dto.category.CategoryReadDTO;
-import com.esngwala.spring.boot.scaffold.dto.category.CategoryUpdateDTO;
-import com.esngwala.spring.boot.scaffold.dto.common.PageRequestParams;
-import com.esngwala.spring.boot.scaffold.service.interfaces.CategoryServiceInterface;
+import com.esngwala.spring.boot.scaffold.api.dto.category.CategoryCreateDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.category.CategoryReadDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.category.CategoryUpdateDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.common.PageRequestParams;
+import com.esngwala.spring.boot.scaffold.application.service.interfaces.CategoryServiceInterface;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

@@ -1,10 +1,10 @@
 package com.esngwala.spring.boot.scaffold;
 
-import com.esngwala.spring.boot.scaffold.config.AppProperties;
-import com.esngwala.spring.boot.scaffold.config.CorsProperties;
-import com.esngwala.spring.boot.scaffold.config.MailFromProperties;
-import com.esngwala.spring.boot.scaffold.config.RabbitMQProperties;
-import com.esngwala.spring.boot.scaffold.config.RateLimitProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.AppProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.CorsProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.MailFromProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.RabbitMQProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.RateLimitProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

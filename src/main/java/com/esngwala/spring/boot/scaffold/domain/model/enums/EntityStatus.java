@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.model.enums;
+package com.esngwala.spring.boot.scaffold.domain.model.enums;
 
 public enum EntityStatus {
     ACTIVE,

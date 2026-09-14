@@ -1,6 +1,6 @@
-package com.esngwala.spring.boot.scaffold.model;
+package com.esngwala.spring.boot.scaffold.domain.model;
 
-import com.esngwala.spring.boot.scaffold.model.base.AuditableEntity;
+import com.esngwala.spring.boot.scaffold.domain.model.base.AuditableEntity;
 import jakarta.persistence.Entity;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.model.auth;
+package com.esngwala.spring.boot.scaffold.domain.model.auth;
 
 import jakarta.persistence.*;
 import lombok.*;

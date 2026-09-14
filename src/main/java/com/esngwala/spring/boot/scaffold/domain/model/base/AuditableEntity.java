@@ -1,6 +1,6 @@
-package com.esngwala.spring.boot.scaffold.model.base;
+package com.esngwala.spring.boot.scaffold.domain.model.base;
 
-import com.esngwala.spring.boot.scaffold.model.enums.EntityStatus;
+import com.esngwala.spring.boot.scaffold.domain.model.enums.EntityStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

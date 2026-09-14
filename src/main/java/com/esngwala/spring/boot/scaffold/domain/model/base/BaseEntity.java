@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.model.base;
+package com.esngwala.spring.boot.scaffold.domain.model.base;
 
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.GeneratedValue;

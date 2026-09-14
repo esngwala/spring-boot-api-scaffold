@@ -1,11 +1,10 @@
-package com.esngwala.spring.boot.scaffold.controller;
+package com.esngwala.spring.boot.scaffold.api.controller;
 
-import com.esngwala.spring.boot.scaffold.dto.auth.*;
-import com.esngwala.spring.boot.scaffold.dto.auth.*;
-import com.esngwala.spring.boot.scaffold.model.auth.UserPrincipal;
-import com.esngwala.spring.boot.scaffold.service.AuthService;
-import com.esngwala.spring.boot.scaffold.service.EmailVerificationService;
-import com.esngwala.spring.boot.scaffold.service.PasswordResetService;
+import com.esngwala.spring.boot.scaffold.api.dto.auth.*;
+import com.esngwala.spring.boot.scaffold.domain.model.auth.UserPrincipal;
+import com.esngwala.spring.boot.scaffold.application.service.AuthService;
+import com.esngwala.spring.boot.scaffold.application.service.EmailVerificationService;
+import com.esngwala.spring.boot.scaffold.application.service.PasswordResetService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
