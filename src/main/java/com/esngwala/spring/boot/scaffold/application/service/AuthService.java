@@ -1,7 +1,7 @@
 package com.esngwala.spring.boot.scaffold.application.service;
 
 import com.esngwala.spring.boot.scaffold.api.dto.auth.*;
-import com.esngwala.spring.boot.scaffold.infrastructure.config.AppProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.properties.AppProperties;
 import com.esngwala.spring.boot.scaffold.infrastructure.messaging.payload.EmailPayload;
 import com.esngwala.spring.boot.scaffold.infrastructure.messaging.publisher.EmailQueueProducers;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.Role;

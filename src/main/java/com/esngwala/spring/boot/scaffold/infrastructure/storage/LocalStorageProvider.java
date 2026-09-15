@@ -18,7 +18,7 @@ import java.nio.file.StandardCopyOption;
 @Slf4j
 public class LocalStorageProvider {
 
-    private final com.esngwala.spring.boot.scaffold.infrastructure.config.properties.StorageProperties storageProperties;
+    private final StorageProperties storageProperties;
 
     public String store(InputStream inputStream, String key, long size, String contentType) {
         Path temporaryPath = null;

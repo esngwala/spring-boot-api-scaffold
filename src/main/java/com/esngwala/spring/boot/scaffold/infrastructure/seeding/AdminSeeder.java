@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.seeding;
 
 import com.esngwala.spring.boot.scaffold.domain.model.auth.Role;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.User;
@@ -31,7 +31,7 @@ public class AdminSeeder {
             PasswordEncoder passwordEncoder
     ) {
         return args -> {
-            String adminEmail = "admin@localhost";
+            String adminEmail = "admin@localhost.com";
 
             if (userRepository.findByEmail(adminEmail).isEmpty()) {
                 Role adminRole = roleRepository.findByName("ADMIN")

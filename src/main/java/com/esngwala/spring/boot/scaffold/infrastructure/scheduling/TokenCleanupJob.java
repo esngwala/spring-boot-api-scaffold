@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.scheduling;
+package com.esngwala.spring.boot.scaffold.infrastructure.scheduling;
 
 import com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories.plain.EmailVerificationTokenRepository;
 import com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories.plain.PasswordResetTokenRepository;
@@ -13,7 +13,7 @@ import java.time.Instant;
 
 /**
  * Periodically purges stale token rows to prevent indefinite table growth.
- *
+ * <p>
  * Schedule: daily at 02:00 UTC (configurable via app.scheduling.token-cleanup-cron).
  * All three token tables are cleaned in a single transaction per run.
  */

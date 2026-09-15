@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.security.handler;
 
 import com.esngwala.spring.boot.scaffold.shared.exception.ErrorResponse;
 import tools.jackson.databind.ObjectMapper;

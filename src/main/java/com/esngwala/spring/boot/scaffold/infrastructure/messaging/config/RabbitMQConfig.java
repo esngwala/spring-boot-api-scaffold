@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.messaging.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.*;

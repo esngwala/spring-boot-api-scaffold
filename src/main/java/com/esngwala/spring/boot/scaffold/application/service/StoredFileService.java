@@ -37,6 +37,7 @@ public class StoredFileService implements StoredServiceFileInterface {
     public StoredFileReadDTO uploadFile(StoredCreateFileDTO dto) {
         validateUpload(dto);
         String originalName = dto.file().getOriginalFilename();
+        assert originalName != null;
         String key = generateStorageKey(UUID.randomUUID(), sanitizeFileName(originalName), dto.category());
         boolean bytesStored = false;
         try {

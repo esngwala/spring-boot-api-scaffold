@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.messaging.config;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,11 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.security.config;
 
 import com.esngwala.spring.boot.scaffold.application.service.AuthUserDetailsService;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.properties.CorsProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.security.filter.JwtAuthenticationFilter;
+import com.esngwala.spring.boot.scaffold.infrastructure.security.filter.RateLimitingFilter;
+import com.esngwala.spring.boot.scaffold.infrastructure.security.handler.JsonAccessDeniedHandler;
+import com.esngwala.spring.boot.scaffold.infrastructure.security.handler.JsonAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,7 +56,7 @@ public class SecurityConfig {
                                 .includeSubDomains(true)
                                 .maxAgeInSeconds(31536000))
                         // Deny framing completely (clickjacking protection)
-                        .frameOptions(frame -> frame.deny())
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
                         // Prevent MIME-type sniffing
                         .contentTypeOptions(c -> {})
                         // Restrict referrer information

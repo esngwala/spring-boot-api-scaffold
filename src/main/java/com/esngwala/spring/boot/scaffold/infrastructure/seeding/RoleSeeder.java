@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.seeding;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.Role;
 import com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories.plain.RoleRepository;
 import org.springframework.boot.CommandLineRunner;

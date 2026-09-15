@@ -1,4 +1,5 @@
 package com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories.plain;
+
 import com.esngwala.spring.boot.scaffold.domain.model.auth.RefreshToken;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
 package com.esngwala.spring.boot.scaffold.infrastructure.messaging.consumer;
 
-import com.esngwala.spring.boot.scaffold.infrastructure.config.MailFromProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.properties.MailFromProperties;
 import com.esngwala.spring.boot.scaffold.infrastructure.messaging.payload.EmailPayload;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

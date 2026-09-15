@@ -1,6 +1,8 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.security.filter;
 
+import com.esngwala.spring.boot.scaffold.infrastructure.security.properties.RateLimitProperties;
 import com.esngwala.spring.boot.scaffold.shared.exception.ErrorResponse;
+import org.jspecify.annotations.NonNull;
 import tools.jackson.databind.ObjectMapper;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
@@ -41,9 +43,9 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain chain) throws ServletException, IOException {
         String ip = resolveClientIp(request);
         Bucket bucket = buckets.computeIfAbsent(ip, k -> newBucket());
 

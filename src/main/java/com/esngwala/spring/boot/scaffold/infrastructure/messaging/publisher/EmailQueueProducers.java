@@ -1,6 +1,6 @@
 package com.esngwala.spring.boot.scaffold.infrastructure.messaging.publisher;
 
-import com.esngwala.spring.boot.scaffold.infrastructure.config.RabbitMQProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.messaging.config.RabbitMQProperties;
 import com.esngwala.spring.boot.scaffold.infrastructure.messaging.payload.EmailPayload;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

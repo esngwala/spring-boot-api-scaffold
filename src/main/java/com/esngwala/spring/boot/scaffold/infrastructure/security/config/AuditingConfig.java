@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.security.config;
 
 import com.esngwala.spring.boot.scaffold.application.service.CurrentUserService;
 import lombok.RequiredArgsConstructor;

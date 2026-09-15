@@ -15,10 +15,10 @@ import java.util.List;
 
 /**
  * OpenAPI / Swagger UI configuration.
- *
+ * <p>
  * Active on the "dev" profile only — never loaded in production.
- * UI available at: http://localhost:8080/swagger-ui.html
- * JSON spec at:    http://localhost:8080/v3/api-docs
+ * UI available at: <a href="http://localhost:8080/swagger-ui.html">...</a>
+ * JSON spec at:    <a href="http://localhost:8080/v3/api-docs">...</a>
  */
 @Configuration
 public class OpenApiConfig {

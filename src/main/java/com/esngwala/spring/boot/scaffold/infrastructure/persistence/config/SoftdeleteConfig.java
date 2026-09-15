@@ -1,4 +1,4 @@
-package com.esngwala.spring.boot.scaffold.infrastructure.config;
+package com.esngwala.spring.boot.scaffold.infrastructure.persistence.config;
 
 import com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories.softdeletable.base.SoftDeleteRepositoryImpl;
 import org.springframework.context.annotation.Configuration;

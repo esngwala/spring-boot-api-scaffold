@@ -1,6 +1,6 @@
 package com.esngwala.spring.boot.scaffold.application.service;
 
-import com.esngwala.spring.boot.scaffold.infrastructure.config.AppProperties;
+import com.esngwala.spring.boot.scaffold.infrastructure.config.properties.AppProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
