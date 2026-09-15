@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.access.AccessDeniedException;
 
@@ -124,6 +125,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAccessDenied(Exception ex, HttpServletRequest req) {
         log.warn("Access denied at {}: {}", req.getRequestURI(), ex.getMessage());
         return buildResponse(HttpStatus.FORBIDDEN, "You do not have permission to access this resource", req);
+    }
+
+    /**
+     * Handles file upload size exceeding the configured maximum — returns 413 Payload Too Large.
+     * Triggered when multipart file size exceeds spring.servlet.multipart.max-file-size or max-request-size.
+     */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleMaxUploadSizeExceeded(MaxUploadSizeExceededException ex, HttpServletRequest req) {
+        log.error("File upload size exceeded at {}", req.getRequestURI(), ex);
+        return buildResponse(HttpStatus.PAYLOAD_TOO_LARGE, "File size exceeds the maximum allowed upload size of 50MB", req);
     }
 
     @ExceptionHandler(Exception.class)

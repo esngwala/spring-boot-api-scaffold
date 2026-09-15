@@ -8,6 +8,12 @@ security:
 spring:
     application:
         name: spring-scaffold
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 50MB
+            max-request-size: 100MB
+            file-size-threshold: 10MB
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: ${DB_URL}
@@ -83,3 +89,10 @@ app:
         capacity: ${RATE_LIMIT_CAPACITY:100}
         refill-tokens: ${RATE_LIMIT_REFILL_TOKENS:100}
         refill-period-seconds: ${RATE_LIMIT_REFILL_PERIOD_SECONDS:60}
+
+    storage:
+        type: local
+        max-file-size-bytes: 52428800  # 50MB (matches Spring's multipart limit)
+        local:
+            base-path: ./uploads
+            public-url-prefix: /files

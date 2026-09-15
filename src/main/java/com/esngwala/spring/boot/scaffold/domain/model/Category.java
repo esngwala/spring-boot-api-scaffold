@@ -1,7 +1,7 @@
 package com.esngwala.spring.boot.scaffold.domain.model;
 
 import com.esngwala.spring.boot.scaffold.domain.model.base.AuditableEntity;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
