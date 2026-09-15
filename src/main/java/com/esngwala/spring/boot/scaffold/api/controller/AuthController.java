@@ -85,4 +85,15 @@ public class AuthController {
         emailVerificationService.resend(principal.user());
         return ResponseEntity.accepted().build();
     }
+
+    /**
+     * Re-sends the verification email for unverified users who cannot log in.
+     * Always returns 202 Accepted regardless of whether the email exists,
+     * to prevent user enumeration.
+     */
+    @PostMapping("/resend-verification-email")
+    public ResponseEntity<Void> resendVerificationByEmail(@Valid @RequestBody ForgotPasswordRequest request) {
+        emailVerificationService.resendByEmail(request.email());
+        return ResponseEntity.accepted().build();
+    }
 }

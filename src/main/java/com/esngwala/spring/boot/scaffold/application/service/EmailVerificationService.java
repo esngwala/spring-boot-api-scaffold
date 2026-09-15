@@ -103,6 +103,23 @@ public class EmailVerificationService {
         sendVerificationEmail(user);
     }
 
+    /**
+     * Re-sends the verification email for an unverified user by email address.
+     * Silently succeeds if the email doesn't exist or is already verified
+     * to prevent user enumeration.
+     */
+    @Transactional
+    public void resendByEmail(String email) {
+        String normalized = email.trim().toLowerCase();
+        userRepository.findByEmail(normalized).ifPresent(user -> {
+            if (!user.isEmailVerified()) {
+                sendVerificationEmail(user);
+            }
+        });
+        // Always succeed silently to prevent email enumeration
+        log.info("Verification resend requested for {}", normalized);
+    }
+
     // --- helpers ---
 
     private String generateRawToken() {

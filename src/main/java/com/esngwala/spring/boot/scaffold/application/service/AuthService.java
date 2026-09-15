@@ -62,16 +62,7 @@ public class AuthService {
         user.getRoles().add(role);
         User saved = users.save(user);
 
-        // Dispatch welcome email asynchronously via RabbitMQ
-        String html = emailTemplateService.renderWelcome(saved.getFirstName());
-        emailProducers.sendWelcomeEmail(new EmailPayload(
-                saved.getEmail(),
-                null,
-                "Welcome to " + appProps.name() + "!",
-                html
-        ));
-
-        // Dispatch email verification link
+        // Dispatch email verification link (includes welcome message)
         emailVerificationService.sendVerificationEmail(saved);
 
         return response(saved);
@@ -91,6 +82,12 @@ public class AuthService {
         }
         User user = users.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password"));
+        
+        // Enforce email verification before allowing login
+        if (!user.isEmailVerified()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Please verify your email address before logging in");
+        }
+        
         return new TokenResponse(
                 jwtService.generateToken(email),
                 refreshTokens.create(user),
