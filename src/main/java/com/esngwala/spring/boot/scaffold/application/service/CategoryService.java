@@ -20,9 +20,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryService implements CategoryServiceInterface {
+
+    private static final Set<String> ALLOWED_SORT_FIELDS = Set.of("id", "name", "createdAt", "updatedAt");
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
@@ -67,6 +71,9 @@ public class CategoryService implements CategoryServiceInterface {
     @Override
     @Transactional(readOnly = true)
     public Page<CategoryReadDTO> getPaged(PageRequestParams params) {
+        if (!ALLOWED_SORT_FIELDS.contains(params.sortBy())) {
+            throw new IllegalArgumentException("Unsupported sort field: " + params.sortBy());
+        }
         Specification<Category> spec = Specification
                 .where(CategorySpecification.nameContains(params.searchTerm()));
 

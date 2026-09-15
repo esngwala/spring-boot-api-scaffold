@@ -20,6 +20,11 @@ public interface EmailVerificationTokenRepository extends JpaRepository<EmailVer
     @Query("UPDATE EmailVerificationToken t SET t.usedAt = CURRENT_TIMESTAMP WHERE t.user = :user AND t.usedAt IS NULL")
     void invalidateAllForUser(User user);
 
+    /** Atomically consumes a valid token so concurrent verification requests cannot both succeed. */
+    @Modifying
+    @Query("UPDATE EmailVerificationToken t SET t.usedAt = :usedAt WHERE t.id = :id AND t.usedAt IS NULL AND t.expiresAt > :usedAt")
+    int consumeIfValid(@Param("id") UUID id, @Param("usedAt") Instant usedAt);
+
     /** Deletes tokens that are expired or have already been used. */
     @Modifying
     @Query("DELETE FROM EmailVerificationToken t WHERE t.expiresAt < :cutoff OR t.usedAt IS NOT NULL")

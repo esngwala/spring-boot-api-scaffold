@@ -55,7 +55,7 @@ public class EmailVerificationService {
         long expiryHours = appProps.emailVerification().tokenTtl().toHours();
         String html = emailTemplateService.renderVerifyEmail(user.getFirstName(), raw, expiryHours);
 
-        emailProducers.sendWelcomeEmail(new EmailPayload(
+        emailProducers.sendEmailNotification(new EmailPayload(
                 user.getEmail(),
                 null,
                 "Verify your email address",
@@ -84,11 +84,10 @@ public class EmailVerificationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification token has expired");
 
         User user = token.getUser();
+        if (tokenRepository.consumeIfValid(token.getId(), Instant.now()) != 1)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification token has already been used");
         user.setEmailVerified(true);
         userRepository.save(user);
-
-        token.setUsedAt(Instant.now());
-        tokenRepository.save(token);
 
         log.info("Email verified for user {}", user.getEmail());
     }

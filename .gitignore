@@ -32,3 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local development file storage; persisted assets must never be committed.
+/uploads/

@@ -5,6 +5,7 @@ import com.esngwala.spring.boot.scaffold.domain.model.enums.FileStatus;
 import com.esngwala.spring.boot.scaffold.domain.model.enums.FileVisibility;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.sql.Types;
@@ -17,11 +18,11 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class StoredFile extends AuditableEntity<UUID> {
+@SuperBuilder
+public class StoredFile extends AuditableEntity {
 
-    // Override the inherited @Id to remove IDENTITY generation for UUID
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(Types.BINARY)
     private UUID id;
 

@@ -1,11 +1,12 @@
 package com.esngwala.spring.boot.scaffold.domain.model.base;
 
-import com.esngwala.spring.boot.scaffold.domain.model.enums.EntityStatus;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -19,8 +20,9 @@ import java.util.UUID;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Getter @Setter
-@SQLRestriction("status <> 'DELETED'")
-public class AuditableEntity<ID> extends BaseEntity<ID> {
+@SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class AuditableEntity {
 
     @CreatedDate
     @Column(updatable = false)
@@ -38,18 +40,4 @@ public class AuditableEntity<ID> extends BaseEntity<ID> {
     @JdbcTypeCode(Types.BINARY)
     private UUID updatedById;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private EntityStatus status = EntityStatus.ACTIVE;
-
-    private LocalDateTime statusChangedAt;
-
-    @JdbcTypeCode(Types.BINARY)
-    private UUID statusChangedById;
-
-    public void changeStatus(EntityStatus newStatus, UUID changedById) {
-        this.status = newStatus;
-        this.statusChangedAt = LocalDateTime.now();
-        this.statusChangedById = changedById;
-    }
 }

@@ -96,12 +96,10 @@ public class PasswordResetService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reset token has expired");
 
         User user = token.getUser();
+        if (tokenRepository.consumeIfValid(token.getId(), Instant.now()) != 1)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reset token has already been used");
         user.setPasswordHash(passwordEncoder.encode(request.password()));
         userRepository.save(user);
-
-        // Mark token as consumed
-        token.setUsedAt(Instant.now());
-        tokenRepository.save(token);
 
         log.info("Password successfully reset for user {}", user.getEmail());
     }

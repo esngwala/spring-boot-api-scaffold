@@ -1,6 +1,6 @@
 package com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories.softdeletable.base;
 
-import com.esngwala.spring.boot.scaffold.domain.model.base.AuditableEntity;
+import com.esngwala.spring.boot.scaffold.domain.model.base.SoftDeletableEntity;
 import com.esngwala.spring.boot.scaffold.domain.model.enums.EntityStatus;
 import com.esngwala.spring.boot.scaffold.application.service.CurrentUserService;
 import jakarta.persistence.EntityManager;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-public class SoftDeleteRepositoryImpl<T extends AuditableEntity<ID>, ID>
+public class SoftDeleteRepositoryImpl<T extends SoftDeletableEntity, ID>
         extends SimpleJpaRepository<T, ID>
         implements SoftDeleteRepository<T, ID>
 {

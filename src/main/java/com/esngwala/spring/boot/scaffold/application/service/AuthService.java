@@ -100,7 +100,10 @@ public class AuthService {
     @Transactional
     public TokenResponse refresh(RefreshTokenRequest request) {
         var token = refreshTokens.valid(request.refreshToken());
-        refreshTokens.revoke(token);
+        if (!refreshTokens.revokeIfActive(token)) {
+            refreshTokens.revokeAllActiveTokens(token.getUser());
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Refresh token reuse detected");
+        }
         User user = token.getUser();
         return new TokenResponse(
                 jwtService.generateToken(user.getEmail()),

@@ -9,7 +9,6 @@ import java.util.UUID;
 public record StoredFileReadDTO(
         UUID id,
         String originalFileName,
-        String storageKey,
         String contentType,
         Long fileSizeBytes,
         String checksum,

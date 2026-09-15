@@ -9,7 +9,9 @@ import java.util.UUID;
 
 public interface StoredServiceFileInterface {
     StoredFileReadDTO uploadFile(StoredCreateFileDTO dto);
+    Resource downloadActiveFile(UUID fileId);
     Resource downloadFile(UUID fileId);
+    StoredFileReadDTO getActiveFile(UUID fileId);
     StoredFileReadDTO getById(UUID fileId);
     List<StoredFileReadDTO> getByIds(List<UUID> fileIds);
     void delete(UUID fileId);
