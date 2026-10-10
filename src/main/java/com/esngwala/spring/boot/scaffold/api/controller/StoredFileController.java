@@ -4,6 +4,7 @@ import com.esngwala.spring.boot.scaffold.api.dto.storedFile.StoredCreateFileDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.storedFile.StoredFileReadDTO;
 import com.esngwala.spring.boot.scaffold.application.service.interfaces.StoredServiceFileInterface;
 import com.esngwala.spring.boot.scaffold.domain.model.enums.FileVisibility;
+import com.esngwala.spring.boot.scaffold.shared.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -42,12 +43,17 @@ public class StoredFileController {
     @GetMapping("/{id}")
     public ResponseEntity<Resource> downloadFile(@PathVariable UUID id) {
         Resource file = storedFileService.downloadFile(id);
-        StoredFileReadDTO metadata = storedFileService.getById(id);
+        StoredFileReadDTO metadata = storedFileService.getActiveFile(id);
+
+        if (metadata.visibility() != FileVisibility.PUBLIC) {
+            throw new ResourceNotFoundException("Public file not found: " + id);
+        }
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
                         .filename(sanitizeDownloadName(metadata.originalFileName()), StandardCharsets.UTF_8).build().toString())
                 .contentType(MediaType.parseMediaType(metadata.contentType()))
+                .header("X-Content-Type-Options", "nosniff")
                 .body(file);
     }
 

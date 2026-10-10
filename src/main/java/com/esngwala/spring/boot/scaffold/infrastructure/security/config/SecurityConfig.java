@@ -79,6 +79,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/resend-verification-email").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/api/v1/auth/verify-email").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/files/*/info", "/api/v1/files/*/url").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/v1/files/*").permitAll()
                         // Swagger UI — only reachable in dev (disabled via springdoc config in prod)
                         .requestMatchers(

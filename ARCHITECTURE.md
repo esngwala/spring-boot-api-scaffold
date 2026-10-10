@@ -131,6 +131,12 @@ credentials in a deployed environment.
 
 - Local disk storage is for development/single-node deployments; replace it with
   an object-storage provider or shared volume for multiple application nodes.
+- The development profile supplies local MySQL, RabbitMQ, and Mailpit defaults
+  and a development-only JWT secret. Production must provide secrets and
+  service endpoints through the deployment environment.
+- The initial schema is kept in one baseline migration,
+  `V1__initial_scaffold.sql`. Once it is applied to a shared environment, use
+  new forward-only migrations for schema changes.
 - File MIME type comes from the client. Add content inspection/type policy when a
   consuming application needs it.
 - `StoredFile.checksum` is reserved but is not currently calculated.

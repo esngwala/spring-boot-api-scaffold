@@ -29,14 +29,13 @@ public class AdminSeeder {
             UserRepository userRepository,
             RoleRepository roleRepository,
             PasswordEncoder passwordEncoder
-    ) {
+        ) {
         return args -> {
+            RoleSeeder.getOrCreate(roleRepository, "USER");
+            Role adminRole = RoleSeeder.getOrCreate(roleRepository, "ADMIN");
             String adminEmail = "admin@localhost.com";
 
             if (userRepository.findByEmail(adminEmail).isEmpty()) {
-                Role adminRole = roleRepository.findByName("ADMIN")
-                        .orElseThrow(() -> new IllegalStateException("ADMIN role not found. Ensure RoleSeeder runs first."));
-
                 User admin = new User();
                 admin.setEmail(adminEmail);
                 admin.setPasswordHash(passwordEncoder.encode("admin123"));

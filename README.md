@@ -24,15 +24,16 @@ boundaries.
 ## Quick start
 
 ```powershell
-docker compose up -d
+docker compose up -d rabbitmq mailpit
 .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev"
 ```
 
-Create the local MySQL database `ecom` first. The application runs at
+Create the local MySQL database `spring_scaffold` first (or set `DB_URL` to
+another local database). The application runs at
 `http://localhost:8080`; Mailpit is available at `http://localhost:8025` and
 RabbitMQ management at `http://localhost:15672`.
 
-The `dev` profile creates `admin@localhost` / `admin123`. It exists only for
+The `dev` profile creates `admin@localhost.com` / `admin123`. It exists only for
 local development.
 
 ## Documentation
@@ -41,6 +42,11 @@ local development.
   identity, assets, messaging, and known limits.
 - [Help](HELP.md): complete local setup, required configuration, testing, Flyway,
   upload guidance, and troubleshooting.
+
+The repository contains one baseline migration, `V1__initial_scaffold.sql`.
+Keep the initial schema consolidated in that file until it has been applied to
+a shared or production database; after that, use forward-only numbered
+migrations for schema changes.
 
 ## Project principles
 

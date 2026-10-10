@@ -10,6 +10,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * JSON spec at:    <a href="http://localhost:8080/v3/api-docs">...</a>
  */
 @Configuration
+@Profile("dev")
 public class OpenApiConfig {
 
     private static final String BEARER_SCHEME = "bearerAuth";
