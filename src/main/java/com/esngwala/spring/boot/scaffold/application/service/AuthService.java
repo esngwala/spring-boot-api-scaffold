@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Locale;
+import java.util.Comparator;
 
 @Service
 @RequiredArgsConstructor
@@ -125,6 +126,12 @@ public class AuthService {
                 user.getLastName(),
                 user.getEmail(),
                 user.isEmailVerified(),
-                user.getCreatedAt());
+                user.getCreatedAt(),
+                user.getRoles().stream()
+                        .flatMap(role -> role.getPermissions().stream())
+                        .map(com.esngwala.spring.boot.scaffold.domain.model.auth.Permission::getName)
+                        .distinct()
+                        .sorted(Comparator.naturalOrder())
+                        .toList());
     }
 }
