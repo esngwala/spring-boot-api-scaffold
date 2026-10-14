@@ -49,7 +49,7 @@ This document records the current auth structure, permission vocabulary, API beh
 
 ### SP-002 — Permission domain and Flyway migration
 
-Add `Permission`, the role-permission relationship, repositories, and a forward-only migration. The scaffold should use `V2__add_permissions.sql` because `V1__initial_scaffold.sql` is already committed. The migration must create named constraints and indexes and seed the canonical permission rows and role assignments idempotently.
+Add `Permission`, the role-permission relationship, repositories, and a forward-only migration. The scaffold should use `V2__add_permissions.sql` because `V1__initial_scaffold.sql` is already committed. The migration must create named constraints and seed the canonical permission rows. Role assignments belong in the application seeder because baseline roles are created after Flyway migrations during application startup.
 
 ### SP-003 — Authority mapping and current-user contract
 
