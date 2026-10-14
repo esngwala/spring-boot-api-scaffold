@@ -127,11 +127,12 @@ public class AuthService {
                 user.getEmail(),
                 user.isEmailVerified(),
                 user.getCreatedAt(),
-                user.getRoles().stream()
-                        .flatMap(role -> role.getPermissions().stream())
+                java.util.stream.Stream.concat(
+                        user.getRoles().stream().flatMap(role -> role.getPermissions().stream()),
+                        user.getPermissions().stream())
                         .map(com.esngwala.spring.boot.scaffold.domain.model.auth.Permission::getName)
-                        .distinct()
-                        .sorted(Comparator.naturalOrder())
-                        .toList());
+                        .collect(java.util.stream.Collectors.toCollection(java.util.TreeSet::new))
+                        .stream()
+                        .collect(java.util.stream.Collectors.toCollection(java.util.ArrayList::new)));
     }
 }
