@@ -10,11 +10,14 @@ public record UserPrincipal(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return java.util.stream.Stream.concat(
+        return java.util.stream.Stream.of(
                         user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())),
                         user.getRoles().stream()
                                 .flatMap(role -> role.getPermissions().stream())
+                                .map(permission -> new SimpleGrantedAuthority(permission.getName())),
+                        user.getPermissions().stream()
                                 .map(permission -> new SimpleGrantedAuthority(permission.getName())))
+                .flatMap(stream -> stream)
                 .filter(Objects::nonNull)
                 .distinct()
                 .toList();

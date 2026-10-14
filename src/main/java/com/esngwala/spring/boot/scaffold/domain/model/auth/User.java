@@ -18,6 +18,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     @Builder.Default private Set<Role> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_permissions", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    @Builder.Default private Set<Permission> permissions = new HashSet<>();
     @Column(nullable = false, length = 100) private String firstName;
     @Column(nullable = false, length = 100) private String lastName;
     @Column(nullable = false, length = 254) private String email;
