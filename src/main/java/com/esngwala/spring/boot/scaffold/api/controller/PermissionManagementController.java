@@ -2,8 +2,10 @@ package com.esngwala.spring.boot.scaffold.api.controller;
 
 import com.esngwala.spring.boot.scaffold.api.dto.permission.PermissionReadDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.permission.RoleReadDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.permission.UserReadDTO;
 import com.esngwala.spring.boot.scaffold.application.service.PermissionManagementService;
 import com.esngwala.spring.boot.scaffold.application.service.RoleManagementService;
+import com.esngwala.spring.boot.scaffold.application.service.UserManagementService;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +28,18 @@ import java.util.UUID;
 public class PermissionManagementController {
     private final PermissionManagementService permissionService;
     private final RoleManagementService roleService;
+    private final UserManagementService userService;
 
     @GetMapping("/permissions")
     @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
     public ResponseEntity<List<PermissionReadDTO>> listPermissions() {
         return ResponseEntity.ok(permissionService.list());
+    }
+
+    @GetMapping("/users")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<List<UserReadDTO>> listUsers() {
+        return ResponseEntity.ok(userService.list());
     }
 
     @GetMapping("/roles")
@@ -93,3 +102,5 @@ public class PermissionManagementController {
         return ResponseEntity.noContent().build();
     }
 }
+
+
