@@ -65,7 +65,7 @@ Seed canonical permissions, assign baseline permissions to `USER` and `ADMIN`, a
 
 ### SP-006 — Verification and security tests
 
-Add unit tests for authority mapping and permission checks, repository/integration coverage for assignments, controller tests for 401/403 behavior, and migration or context verification. Include tests proving that a role without a permission is denied and that existing role checks remain compatible.
+Add unit tests for authority mapping and permission checks, repository/integration coverage for assignments, controller tests for 401/403 behavior, and migration or context verification. Include tests proving that a role without a permission is denied and that existing role checks remain compatible. The administrative API should list known permissions and grant or revoke a direct user permission, with every management operation requiring `admin:access`.
 
 ### SP-007 — Crowdfunding implementation
 
