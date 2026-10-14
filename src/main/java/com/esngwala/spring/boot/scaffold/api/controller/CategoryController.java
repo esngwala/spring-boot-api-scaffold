@@ -26,25 +26,26 @@ public class CategoryController {
     private final CategoryServiceInterface categoryService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).CATEGORIES_CREATE)")
     public ResponseEntity<CategoryReadDTO> create(@Valid @RequestBody CategoryCreateDTO createRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(createRequest));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).CATEGORIES_UPDATE)")
     public ResponseEntity<CategoryReadDTO> update(@PathVariable Long id,
                                                    @Valid @RequestBody CategoryUpdateDTO updateBody) {
         return ResponseEntity.ok(categoryService.update(id, updateBody));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).CATEGORIES_READ)")
     public ResponseEntity<CategoryReadDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(categoryService.getById(id));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).CATEGORIES_DELETE)")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         categoryService.delete(id);
         return ResponseEntity.noContent().build();
@@ -55,6 +56,7 @@ public class CategoryController {
      * Default: page 1, 20 per page, sorted by id ascending.
      */
     @GetMapping
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).CATEGORIES_READ)")
     public ResponseEntity<Page<CategoryReadDTO>> list(
             @RequestParam(defaultValue = "1")  @Min(1)            int pageNumber,
             @RequestParam(defaultValue = "20") @Min(1) @Max(200)  int pageSize,
