@@ -7,10 +7,12 @@ import com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
 @Configuration
+@Order(2)
 public class PermissionSeeder {
     private static final List<String> ALL_PERMISSIONS = List.of(
             "admin:access", "categories:read", "categories:create", "categories:update", "categories:delete",
