@@ -1,6 +1,12 @@
 package com.esngwala.spring.boot.scaffold.application.service;
 
 import com.esngwala.spring.boot.scaffold.api.dto.permission.UserReadDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.permission.UserCreateDTO;
+import com.esngwala.spring.boot.scaffold.domain.model.auth.Role;
+import com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories.plain.RoleRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.Permission;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.Role;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.User;
@@ -16,6 +22,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserManagementService {
     private final UserRepository users;
+    private final RoleRepository roles;
+    private final PasswordEncoder passwordEncoder;
+
+    @Transactional
+    public UserReadDTO create(UserCreateDTO request) {
+        String email = request.email().trim().toLowerCase(java.util.Locale.ROOT);
+        if (users.existsByEmail(email)) throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already registered");
+        User user = User.builder().firstName(request.firstName().trim()).lastName(request.lastName().trim()).email(email)
+                .passwordHash(passwordEncoder.encode(request.password())).build();
+        request.roles().stream().map(name -> roles.findByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found: " + name)))
+                .forEach(user.getRoles()::add);
+        return toReadDTO(users.save(user));
+    }
 
     @Transactional(readOnly = true)
     public List<UserReadDTO> list() {
@@ -38,3 +57,5 @@ public class UserManagementService {
                 user.isEmailVerified(), user.isEnabled(), roles, permissions, user.getCreatedAt());
     }
 }
+
+
