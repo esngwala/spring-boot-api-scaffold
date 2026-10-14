@@ -2,6 +2,7 @@ package com.esngwala.spring.boot.scaffold.api.controller;
 
 import com.esngwala.spring.boot.scaffold.api.dto.permission.PermissionReadDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.permission.RoleReadDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.permission.RoleCreateDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.permission.UserReadDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.permission.UserCreateDTO;
 import com.esngwala.spring.boot.scaffold.application.service.PermissionManagementService;
@@ -49,6 +50,12 @@ public class PermissionManagementController {
     @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
     public ResponseEntity<List<UserReadDTO>> listUsers() {
         return ResponseEntity.ok(userService.list());
+    }
+
+    @org.springframework.web.bind.annotation.PostMapping("/roles")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<RoleReadDTO> createRole(@jakarta.validation.Valid @RequestBody RoleCreateDTO request) {
+        return ResponseEntity.status(org.springframework.http.HttpStatus.CREATED).body(roleService.create(request));
     }
 
     @GetMapping("/roles")
@@ -111,6 +118,7 @@ public class PermissionManagementController {
         return ResponseEntity.noContent().build();
     }
 }
+
 
 
 

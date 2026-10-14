@@ -1,6 +1,7 @@
 package com.esngwala.spring.boot.scaffold.application.service;
 
 import com.esngwala.spring.boot.scaffold.api.dto.permission.RoleReadDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.permission.RoleCreateDTO;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.Permission;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.Role;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.User;
@@ -23,6 +24,16 @@ public class RoleManagementService {
     private final RoleRepository roles;
     private final PermissionRepository permissions;
     private final UserRepository users;
+
+    @Transactional
+    public RoleReadDTO create(RoleCreateDTO request) {
+        String name = request.name().trim().toUpperCase(java.util.Locale.ROOT);
+        if (roles.findByName(name).isPresent()) throw new ResponseStatusException(HttpStatus.CONFLICT, "Role already exists");
+        Role role = new Role(); role.setName(name);
+        request.permissions().stream().map(this::findPermission).forEach(role.getPermissions()::add);
+        Role saved = roles.save(role);
+        return new RoleReadDTO(saved.getId(), saved.getName(), saved.getPermissions().stream().map(Permission::getName).sorted().toList());
+    }
 
     @Transactional(readOnly = true)
     public List<RoleReadDTO> list() {
@@ -71,3 +82,4 @@ public class RoleManagementService {
         return new ResponseStatusException(HttpStatus.NOT_FOUND, message);
     }
 }
+
