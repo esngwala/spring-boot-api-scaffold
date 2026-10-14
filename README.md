@@ -42,6 +42,9 @@ local development.
   identity, assets, messaging, and known limits.
 - [Help](HELP.md): complete local setup, required configuration, testing, Flyway,
   upload guidance, and troubleshooting.
+- [Permissions implementation plan](PERMISSIONS_PLAN.md): current authorization
+  baseline, permission model, migration order, seeders, tests, and downstream
+  crowdfunding synchronization.
 
 The repository contains one baseline migration, `V1__initial_scaffold.sql`.
 Keep the initial schema consolidated in that file until it has been applied to
