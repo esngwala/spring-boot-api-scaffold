@@ -27,7 +27,7 @@ public class StoredFileController {
     private final StoredServiceFileInterface storedFileService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).FILES_CREATE)")
     public ResponseEntity<StoredFileReadDTO> uploadFile(
             @RequestParam("file") MultipartFile file,
             @RequestParam(value = "visibility", defaultValue = "PRIVATE") FileVisibility visibility,
@@ -58,20 +58,20 @@ public class StoredFileController {
     }
 
     @GetMapping("/{id}/info")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).FILES_READ)")
     public ResponseEntity<StoredFileReadDTO> getFileInfo(@PathVariable UUID id) {
         return ResponseEntity.ok(storedFileService.getById(id));
     }
 
     @GetMapping("/{id}/url")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).FILES_READ)")
     public ResponseEntity<String> getFileUrl(@PathVariable UUID id) {
         String url = storedFileService.getFileUrl(id);
         return ResponseEntity.ok(url);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).FILES_DELETE)")
     public ResponseEntity<Void> deleteFile(@PathVariable UUID id) {
         storedFileService.delete(id);
         return ResponseEntity.noContent().build();
