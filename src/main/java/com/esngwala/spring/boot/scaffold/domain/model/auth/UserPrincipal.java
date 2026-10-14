@@ -4,15 +4,20 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
+import java.util.Objects;
 
 public record UserPrincipal(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user
-                .getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())).toList();
+        return java.util.stream.Stream.concat(
+                        user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())),
+                        user.getRoles().stream()
+                                .flatMap(role -> role.getPermissions().stream())
+                                .map(permission -> new SimpleGrantedAuthority(permission.getName())))
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
     }
     @Override
     public String getPassword() {
