@@ -1,7 +1,9 @@
 package com.esngwala.spring.boot.scaffold.api.controller;
 
 import com.esngwala.spring.boot.scaffold.api.dto.permission.PermissionReadDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.permission.RoleReadDTO;
 import com.esngwala.spring.boot.scaffold.application.service.PermissionManagementService;
+import com.esngwala.spring.boot.scaffold.application.service.RoleManagementService;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +25,54 @@ import java.util.UUID;
 @Validated
 public class PermissionManagementController {
     private final PermissionManagementService permissionService;
+    private final RoleManagementService roleService;
 
     @GetMapping("/permissions")
     @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
     public ResponseEntity<List<PermissionReadDTO>> listPermissions() {
         return ResponseEntity.ok(permissionService.list());
+    }
+
+    @GetMapping("/roles")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<List<RoleReadDTO>> listRoles() {
+        return ResponseEntity.ok(roleService.list());
+    }
+
+    @PutMapping("/roles/{roleName}/permissions/{permissionName}")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<Void> grantRolePermission(
+            @PathVariable @Pattern(regexp = "[A-Z_]+") String roleName,
+            @PathVariable @Pattern(regexp = "[a-z0-9]+:[a-z0-9]+") String permissionName) {
+        roleService.grantPermission(roleName, permissionName);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/roles/{roleName}/permissions/{permissionName}")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<Void> revokeRolePermission(
+            @PathVariable @Pattern(regexp = "[A-Z_]+") String roleName,
+            @PathVariable @Pattern(regexp = "[a-z0-9]+:[a-z0-9]+") String permissionName) {
+        roleService.revokePermission(roleName, permissionName);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/users/{userId}/roles/{roleName}")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<Void> assignRole(
+            @PathVariable UUID userId,
+            @PathVariable @Pattern(regexp = "[A-Z_]+") String roleName) {
+        roleService.assignRole(userId, roleName);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/users/{userId}/roles/{roleName}")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<Void> removeRole(
+            @PathVariable UUID userId,
+            @PathVariable @Pattern(regexp = "[A-Z_]+") String roleName) {
+        roleService.removeRole(userId, roleName);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/users/{userId}/permissions/{permissionName}")
