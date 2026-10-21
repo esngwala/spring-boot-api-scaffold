@@ -5,6 +5,7 @@ import com.esngwala.spring.boot.scaffold.api.dto.permission.RoleReadDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.permission.RoleCreateDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.permission.UserReadDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.permission.UserCreateDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.permission.UserUpdateDTO;
 import com.esngwala.spring.boot.scaffold.application.service.PermissionManagementService;
 import com.esngwala.spring.boot.scaffold.application.service.RoleManagementService;
 import com.esngwala.spring.boot.scaffold.application.service.UserManagementService;
@@ -44,6 +45,18 @@ public class PermissionManagementController {
     @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
     public ResponseEntity<UserReadDTO> createUser(@jakarta.validation.Valid @RequestBody UserCreateDTO request) {
         return ResponseEntity.status(org.springframework.http.HttpStatus.CREATED).body(userService.create(request));
+    }
+
+    @PutMapping("/users/{userId}")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<UserReadDTO> updateUser(@PathVariable UUID userId, @jakarta.validation.Valid @RequestBody UserUpdateDTO request) {
+        return ResponseEntity.ok(userService.update(userId, request));
+    }
+
+    @DeleteMapping("/users/{userId}")
+    @PreAuthorize("hasAuthority(T(com.esngwala.spring.boot.scaffold.domain.model.auth.Permissions).ADMIN_ACCESS)")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID userId) {
+        userService.delete(userId); return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/users")
@@ -118,6 +131,7 @@ public class PermissionManagementController {
         return ResponseEntity.noContent().build();
     }
 }
+
 
 
 
