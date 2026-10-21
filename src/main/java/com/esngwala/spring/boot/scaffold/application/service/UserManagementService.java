@@ -2,6 +2,7 @@ package com.esngwala.spring.boot.scaffold.application.service;
 
 import com.esngwala.spring.boot.scaffold.api.dto.permission.UserReadDTO;
 import com.esngwala.spring.boot.scaffold.api.dto.permission.UserCreateDTO;
+import com.esngwala.spring.boot.scaffold.api.dto.permission.UserUpdateDTO;
 import com.esngwala.spring.boot.scaffold.domain.model.auth.Role;
 import com.esngwala.spring.boot.scaffold.infrastructure.persistence.repositories.plain.RoleRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +37,23 @@ public class UserManagementService {
         return toReadDTO(users.save(user));
     }
 
+    @Transactional
+    public UserReadDTO update(java.util.UUID id, UserUpdateDTO request) {
+        User user = users.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        String email = request.email().trim().toLowerCase(java.util.Locale.ROOT);
+        users.findByEmail(email).filter(existing -> !existing.getId().equals(id)).ifPresent(existing -> { throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already registered"); });
+        user.setFirstName(request.firstName().trim()); user.setLastName(request.lastName().trim()); user.setEmail(email);
+        if (request.password() != null && !request.password().isBlank()) user.setPasswordHash(passwordEncoder.encode(request.password()));
+        user.getRoles().clear(); request.roles().stream().map(name -> roles.findByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found: " + name))).forEach(user.getRoles()::add);
+        return toReadDTO(users.save(user));
+    }
+
+    @Transactional
+    public void delete(java.util.UUID id) {
+        if (!users.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        users.deleteById(id);
+    }
+
     @Transactional(readOnly = true)
     public List<UserReadDTO> list() {
         return users.findAll().stream()
@@ -57,5 +75,6 @@ public class UserManagementService {
                 user.isEmailVerified(), user.isEnabled(), roles, permissions, user.getCreatedAt());
     }
 }
+
 
 
