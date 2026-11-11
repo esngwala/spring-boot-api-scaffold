@@ -39,4 +39,5 @@ services:
     restart: unless-stopped
 
 volumes:
+  mysql_data:
   rabbitmq_data:
