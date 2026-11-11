@@ -1,9 +1,9 @@
 # Spring Boot Monolith Scaffold
 
-![Build Status](https://github.com)
-![License](https://shields.io)
 ![Java](https://shields.io)
 ![Spring Boot](https://shields.io)
+![MySQL](https://shields.io)
+![RabbitMQ](https://shields.io)
 
 A reusable Spring Boot foundation for building secure modular monoliths. It includes identity, role-based access, Flyway migrations, a soft-delete reference module, RabbitMQ-backed email, and an independent asset-storage module.
 
