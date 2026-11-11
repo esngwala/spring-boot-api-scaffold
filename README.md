@@ -1,40 +1,46 @@
 # Spring Boot Monolith Scaffold
 
-A reusable Spring Boot foundation for building secure modular monoliths. It
-includes identity, role-based access, Flyway migrations, a soft-delete reference
-module, RabbitMQ-backed email, and an independent asset-storage module.
+![Build Status](https://github.com)
+![License](https://shields.io)
+![Java](https://shields.io)
+![Spring Boot](https://shields.io)
 
-It is a starting point—not a prebuilt e-commerce, order, payments, course, or
-crowdfunding system. Add those business modules on top of the established
-boundaries.
+A reusable Spring Boot foundation for building secure modular monoliths. It includes identity, role-based access, Flyway migrations, a soft-delete reference module, RabbitMQ-backed email, and an independent asset-storage module.
 
-## Included
+## Architecture Overview
 
-- JWT authentication with refresh-token rotation
-- Hashed refresh, password-reset, and email-verification tokens
-- Role-based security (`USER`, `ADMIN`), CORS, security headers, and rate limiting
-- Flyway-managed MySQL schema with JPA validation
-- Auditing and opt-in soft deletion
-- Paginated category reference API
-- Local asset storage with public/private visibility and business-module access hooks
-- RabbitMQ queues, retries, dead-letter routing, and HTML email templates
-- Development profile, Docker Compose support for RabbitMQ and Mailpit, and a
-  development admin seed
+```mermaid
+flowchart LR
+    Client([REST Client]) --> Security[Security & Rate Limiter<br/>JWT + RBAC]
+    Security --> Modules[Business & Reference Modules]
+    Modules --> DB[(MySQL + Flyway)]
+    Modules --> MQ[RabbitMQ + Retry/DLQ]
+    MQ --> Mail[Email Worker / Mailpit]
+    Modules --> Storage[Asset Storage Module]
+```
 
-## Quick start
+## Quick Start
 
+### 1. Start Infrastructure (MySQL, RabbitMQ, Mailpit)
+```bash
+docker compose up -d
+```
+
+### 2. Run the Application
+**Linux / macOS:**
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+**Windows (PowerShell):**
 ```powershell
-docker compose up -d rabbitmq mailpit
 .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev"
 ```
 
-Create the local MySQL database `spring_scaffold` first (or set `DB_URL` to
-another local database). The application runs at
-`http://localhost:8080`; Mailpit is available at `http://localhost:8025` and
-RabbitMQ management at `http://localhost:15672`.
-
-The `dev` profile creates `admin@localhost.com` / `admin123`. It exists only for
-local development.
+* **API Base URL:** `http://localhost:8080`
+* **Mailpit UI:** `http://localhost:8025`
+* **RabbitMQ Management:** `http://localhost:15672`
+* **Dev Admin Credentials:** `admin@localhost.com` / `admin123`
 
 ## Documentation
 
